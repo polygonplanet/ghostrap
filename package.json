@@ -1,0 +1,36 @@
+{
+  "name": "ghostrap",
+  "version": "1.0.0",
+  "description": "Observe the object property getter, setter or method calls and add custom behavior.",
+  "main": "ghostrap.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": ""
+  },
+  "scripts": {
+    "test": "mocha tests/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polygonplanet/ghostrap.git"
+  },
+  "keywords": [
+    "observe",
+    "intercept",
+    "object",
+    "trap",
+    "proxy",
+    "before",
+    "after",
+    "around"
+  ],
+  "author": "polygon planet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/polygonplanet/ghostrap/issues"
+  },
+  "homepage": "https://github.com/polygonplanet/ghostrap"
+}

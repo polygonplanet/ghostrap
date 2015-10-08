@@ -1,0 +1,33 @@
+{
+  "name": "ghostrap",
+  "main": "ghostrap.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/polygonplanet/ghostrap",
+  "authors": [
+    "polygonplanet <polygon.planet.aqua@gmail.com>"
+  ],
+  "description": "Observe the object property getter, setter or method calls and add custom behavior.",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "observe",
+    "intercept",
+    "object",
+    "trap",
+    "proxy",
+    "before",
+    "after",
+    "around"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
