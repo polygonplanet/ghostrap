@@ -1,7 +1,7 @@
 {
   "name": "ghostrap",
   "main": "ghostrap.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/polygonplanet/ghostrap",
   "authors": [
     "polygonplanet <polygon.planet.aqua@gmail.com>"
@@ -14,6 +14,7 @@
   ],
   "keywords": [
     "observe",
+    "event",
     "intercept",
     "object",
     "trap",
