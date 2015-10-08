@@ -3,8 +3,8 @@
  *
  * @description  Observe the object property getter, setter or method calls and add custom behavior.
  * @fileoverview Object Observer/Interceptor library
- * @version      1.0.0
- * @date         2015-10-08
+ * @version      1.0.1
+ * @date         2015-10-09
  * @link         https://github.com/polygonplanet/ghostrap
  * @copyright    Copyright (c) 2015 polygon planet <polygon.planet.aqua@gmail.com>
  * @license      MIT
@@ -110,6 +110,17 @@
         var target = events.target;
         this.clear();
         this.init(target);
+        return this;
+      }
+
+      if (func == null &&
+          (isFunction(type) ||
+           (isArray(type) && isFunction(type[0])))) {
+        return this.off('*', type);
+      }
+
+      if (type === '*') {
+        removeHandlers(events, func);
         return this;
       }
 
@@ -282,6 +293,49 @@
   }
 
 
+  function removeHandlers(events, funcs) {
+    if (!funcs) {
+      return;
+    }
+
+    funcs = [].concat(funcs);
+    _removeHandlers(events.handlers, funcs);
+  }
+
+
+  function _removeHandlers(handlers, funcs, parents, when) {
+    if (!handlers) {
+      return;
+    }
+
+    if (isArray(handlers)) {
+      _removeCallbacks(handlers, funcs);
+      if (parents && when &&
+          parents[when] === handlers && handlers.length === 0) {
+        delete parents[when];
+      }
+    } else {
+      var keys = Object.keys(handlers);
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var key = keys[i];
+        _removeHandlers(handlers[keys[i]], funcs, handlers, key);
+      }
+    }
+  }
+
+
+  function _removeCallbacks(callbacks, funcs) {
+    var funcLen = funcs.length;
+    for (var i = 0; i < callbacks.length; i++) {
+      for (var j = 0; j < funcLen; j++) {
+        if (funcs[j] === callbacks[i]) {
+          callbacks.splice(i, 1);
+        }
+      }
+    }
+  }
+
+
   function mixin(target) {
     slice(arguments, 1).forEach(function(source) {
       var key, keys = Object.keys(source);
@@ -373,6 +427,10 @@
     return object;
   }
 
+
+  function isArray(x) {
+    return Array.isArray(x);
+  }
 
   function isObject(x) {
     return typeof x === 'object' && x !== null;

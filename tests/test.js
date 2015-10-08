@@ -437,6 +437,63 @@ describe('ghostrap', function() {
       assert(changeCount2 === 3);
     });
 
+    it('off() omit type', function() {
+      var o = {
+        a: 1,
+        b: 2
+      };
+
+      var ghost = ghostrap(o);
+
+      var count = 0;
+      var count2 = 0;
+      var count3 = 0;
+
+      var set_a = function(target, key, value) {
+        count++;
+        return value;
+      };
+      var set_a2 = function(target, key, value) {
+        count2++;
+        return value;
+      };
+      var set_b = function(target, key, value) {
+        count3++;
+        return value;
+      };
+
+      ghost
+        .on('set:a', set_a)
+        .on('set:a', set_a2)
+        .on('set:b', set_b);
+
+      o.a = 2;
+      assert(count === 1);
+      assert(count2 === 1);
+      assert(count3 === 0);
+
+      o.b = 3;
+      assert(count === 1);
+      assert(count2 === 1);
+      assert(count3 === 1);
+
+      ghost.off(set_a);
+
+      o.a = 3;
+      o.b = 4;
+      assert(count === 1);
+      assert(count2 === 2);
+      assert(count3 === 2);
+
+      ghost.off([set_a2, set_b]);
+
+      o.a = 4;
+      o.b = 5;
+      assert(count === 1);
+      assert(count2 === 2);
+      assert(count3 === 2);
+    });
+
     it('off() without arguments', function() {
       var o = { a: 'abc' };
       var count = 0;
