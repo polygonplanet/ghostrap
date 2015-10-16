@@ -37,6 +37,28 @@
   // WeakMap storage
   var ghostMap;
 
+  /**
+   * Observe the object property getter, setter or method calls
+   *  and add custom behavior.
+   *
+   * @example
+   *   var myModel = {
+   *     id: 1,
+   *     message: 'Hello'
+   *   };
+   *   var ghost = ghostrap(myModel);
+   *   ghost.on('change:message', function() {
+   *     console.log('message changed!');
+   *   });
+   *   myModel.message = 'Good evening';
+   *   // message changed!
+   *   myModel.message = 'Good night';
+   *   // message changed!
+   *
+   * @param {Object} target The target object to trap.
+   * @return {ghostrap} Return an instance of ghostrap.
+   * @name ghostrap
+   */
   function Ghostrap(target) {
     this.init(target);
   }
@@ -65,6 +87,33 @@
 
       return this;
     },
+    /**
+     * Add new handler.
+     *
+     * @param {string} type Type of listener/trigger
+     *   that separates by a colon. 'when:propName' e.g., 'get:myPropName'
+     *
+     *   when:
+     *     - beforeget   : trigger on before get.
+     *     - get         : trigger on get.
+     *     - beforeset   : trigger on before set value.
+     *     - set         : trigger on set value.
+     *     - beforeapply : trigger on before function calls.
+     *     - apply       : trigger on function calls.
+     *     - change      : trigger on changed value.
+     *
+     * @param {function} func handler
+     *   handler arguments are following.
+     *
+     *   function(target, key, value, args) { ... }
+     *
+     *     - target : target object.
+     *     - key    : target key.
+     *     - value  : value to be returned.
+     *     - args   : original function arguments. ('apply' or 'beforeapply')
+     *
+     * @return {ghostrap} Return an instanceof ghostrap
+     */
     on: function(type, func) {
       if (this._once) {
         func = once(func, function() {
@@ -99,10 +148,27 @@
       handlers[when].push(func);
       return this;
     },
+    /**
+     * Add a new handler.
+     * Just like `on`, but handler is called only once.
+     *
+     * @param {string} type Type of listener/trigger
+     * @param {function} func handler
+     * @return {object} Return an instanceof ghostrap
+     */
     once: function(type, func) {
       this._once = true;
       return this.on(type, func);
     },
+    /**
+     * Remove a handler. If argument type is specified, same types handlers
+     * are removed. If argument func is specified, same handlers are removed.
+     * If arguments is omitted, all handlers are removed.
+     *
+     * @param {string} [type] Type of listener/trigger.
+     * @param {function} [func] handler function.
+     * @return {ghostrap} Return an instance of ghostrap.
+     */
     off: function(type, func) {
       var events = this.events;
 
@@ -148,6 +214,11 @@
 
       return this;
     },
+    /**
+     * Clear all handlers and release the target object reference.
+     *
+     * @return {ghostrap} Return an instance of ghostrap.
+     */
     clear: function() {
       var events = this.events;
 
@@ -318,7 +389,7 @@
       var keys = Object.keys(handlers);
       for (var i = 0, len = keys.length; i < len; i++) {
         var key = keys[i];
-        _removeHandlers(handlers[keys[i]], funcs, handlers, key);
+        _removeHandlers(handlers[key], funcs, handlers, key);
       }
     }
   }
