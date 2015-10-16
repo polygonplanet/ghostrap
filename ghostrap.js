@@ -3,8 +3,8 @@
  *
  * @description  Observe the object property getter, setter or method calls and add custom behavior.
  * @fileoverview Object Observer/Interceptor library
- * @version      1.0.1
- * @date         2015-10-09
+ * @version      1.0.2
+ * @date         2015-10-16
  * @link         https://github.com/polygonplanet/ghostrap
  * @copyright    Copyright (c) 2015 polygon planet <polygon.planet.aqua@gmail.com>
  * @license      MIT

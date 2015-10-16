@@ -1,7 +1,7 @@
 {
   "name": "ghostrap",
   "main": "ghostrap.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://github.com/polygonplanet/ghostrap",
   "authors": [
     "polygonplanet <polygon.planet.aqua@gmail.com>"

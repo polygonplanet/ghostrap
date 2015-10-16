@@ -1,6 +1,6 @@
 {
   "name": "ghostrap",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Observe the object property getter, setter or method calls and add custom behavior.",
   "main": "ghostrap.js",
   "directories": {
